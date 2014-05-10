@@ -284,6 +284,14 @@
         [items addObject:fixedSpace];
     }
 
+    // Custom items
+    if (self.customToolbarItems.count > 0) {
+        for (UIBarButtonItem *item in self.customToolbarItems) {
+            [items addObject:flexSpace];
+            [items addObject:item];
+        }
+    }
+    
     // Toolbar visibility
     [_toolbar setItems:items];
     BOOL hideToolbar = YES;
@@ -1388,7 +1396,7 @@
 
 // Enable/disable control visiblity timer
 - (void)hideControlsAfterDelay {
-	if (![self areControlsHidden]) {
+	if (![self areControlsHidden] && self.delayToHideElements > 0) {
         [self cancelControlHiding];
 		_controlVisibilityTimer = [NSTimer scheduledTimerWithTimeInterval:self.delayToHideElements target:self selector:@selector(hideControls) userInfo:nil repeats:NO];
 	}
